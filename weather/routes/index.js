@@ -13,7 +13,6 @@ router.get('/', function(req, res) {
 router.post('/get_weather', async function (req,res) {
   let city = req.body.city;
   let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=${UNITS}&appid=${OWM_API_KEY}`;
-  console.log(url)
 
   try {
     let data = await fetch(url);
@@ -23,6 +22,7 @@ router.post('/get_weather', async function (req,res) {
       res.render('index', {weather: null, error: 'Error: Unknown city'});
     }
     else if (weather.cod == '401' && weather.main == undefined) {
+      console.log(url)
       res.render('index', {weather: null, error: 'Error: Invalid API Key. Please see http://openweathermap.org/faq#error401 for more info.'});
     }
     else {
